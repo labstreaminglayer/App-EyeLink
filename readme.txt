@@ -12,5 +12,17 @@ The tool tries to establish a connection to the EyeLink, if none is found. If yo
 Only one program can have a connection to the eyelink at the same time. Thus, in order to control calibration etc. and stream, one needs to start the program in an extra thread
 You can use the following code to do so:
 
-XXX
+```python
+import threading
+
+from eyelink_custom import eye_link_lsl
+
+
+eye_thread = threading.Thread(target=eye_link_lsl)
+
+eye_thread.start()
+```
+This has the side effect that the thread cannot be stopped and the file not transfered to the local computer.
+One would need to write a terminal class
+
 
