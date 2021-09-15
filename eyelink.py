@@ -63,7 +63,7 @@ def eye_link_lsl(edfFileName="TRIAL.edf",SR=500):
     while quit != 1:
         try:
             
-            if isConnected()==0:
+            if getEYELINK().isConnected()==0:
                 print("Trying to connect to EyeLink tracker...")
                 try:
                     tracker = EyeLink("255.255.255.255")
