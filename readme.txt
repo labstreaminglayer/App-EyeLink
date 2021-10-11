@@ -1,9 +1,28 @@
-This is an updated version of the eyelink app for python 2.6. In order for this to work, python needs to be correctly configured so that pylsl is on the PYTHONPATH environment variable. 
+This is an updated version of the eyelink app for python 3.7.
 
-There is some metadata and the eyelink timestamps is recorded as one of the channels. 
+Requirements:
+pylsl (tested with 1.14)
 
-This program will also write the data using EyeLinks native EDF format. A good way to control this (in Windows) is to make a shortcut, right click and open the properties dialogue. For the target, specify the full path to python 2.6, then the path to the program to which your shortcut is linked, eg:
+This program streams the x/y positions of both eyes, timestamps, pupil and pixelPerDegree
 
-C:\Python26\python.exe C:\Users\ces\Desktop\EyeLink\eyelink.py
+This program also saves the data (default as `TRIAL.EDF`), be sure to modify the command call to give it a unique name every run
 
-then in the Start in field, specify the directory into which you would like your EDF written. The file will be called TRIAL.edf, so you will have to move/rename it after each trial. Obviously, this system can be improved with more code, perhaps a GUI.
+The tool tries to establish a connection to the EyeLink, if none is found. If you use e.g. pygaze, this should work out of the box.
+
+Only one program can have a connection to the eyelink at the same time. Thus, in order to control calibration etc. and stream, one needs to start the program in an extra thread
+You can use the following code to do so:
+
+```python
+import threading
+
+from eyelink_custom import eye_link_lsl
+
+
+eye_thread = threading.Thread(target=eye_link_lsl)
+
+eye_thread.start()
+```
+This has the side effect that the thread cannot be stopped and the file not transfered to the local computer.
+One would need to write a terminal class
+
+
